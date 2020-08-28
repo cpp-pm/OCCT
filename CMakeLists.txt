@@ -430,13 +430,6 @@ if (NOT DEFINED BUILD_DOC_Overview)
   set (BUILD_DOC_Overview ${CAN_DOXYGEN_BE_USED} CACHE BOOL "${BUILD_DOC_Overview_DESCR}")
 endif()
 
-# Don't build Module Draw with Hunter because it has many dependencies that we cannot resolve 
-# and because draw is an executable that is anyway not directly used by a library depending on occt
-set(BUILD_MODULE_Draw OFF CACHE BOOL "${BUILD_MODULE_Draw_DESCR}" FORCE)
-
-# Don't build doxygen documentation for hunter
-set(BUILD_DOC_Overview OFF CACHE BOOL "${BUILD_DOC_Overview_DESCR}")
-
 if (NOT USE_D3D)
   list (REMOVE_ITEM Visualization_TOOLKITS TKD3DHost)
 endif()
@@ -1199,7 +1192,7 @@ install (FILES "${CMAKE_BINARY_DIR}/OpenCASCADEConfigVersion.cmake" DESTINATION 
 
 # Install the export set for use with the install-tree for each configuration
 foreach (OCCT_MODULE ${OCCT_MODULES_ENABLED})
-  install(EXPORT OpenCASCADE${OCCT_MODULE}Targets DESTINATION "${INSTALL_DIR_CMAKE}")
+  install(EXPORT OpenCASCADE${OCCT_MODULE}Targets DESTINATION "${INSTALL_DIR_CMAKE}" NAMESPACE occt::)
 endforeach()
 
 # Update generated OpenCASCADETargets-*.cmake files 
